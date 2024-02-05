@@ -89,7 +89,7 @@ import sys
 import collections
 import shutil
 
-from bisos.common import bxpBaseDir
+# from bisos.common import bxpBaseDir  # NOTYET 2022, has not been b.cs converted, but used.
 
 
 ####+BEGIN: bx:dblock:python:section :title "Importable ICM Examples And Menus"
@@ -168,7 +168,8 @@ def panelBasePathObtain(
     if not panelBase:
         #return "/bisos/var/core/bleePlayer"
         return ( os.path.join(
-            bxpBaseDir.bpbBisos_baseObtain_var(None),
+            # bxpBaseDir.bpbBisos_baseObtain_var(None),  # bxpBaseDir has not been converted to b.cs yet.
+            "/tmp"
             "main/bleePlayer"
         ))
     
@@ -207,7 +208,7 @@ class bleepUpdate(cs.Cmnd):
 ####+END:
         panelBasePath = panelBasePathObtain(panelBase)
 
-        icmName = G.icmMyName()
+        icmName = cs.G.icmMyName()
         icmPrefix, icmExtension = os.path.splitext(icmName)
 
         panelFileName = "{}-Panel.org".format(icmPrefix)
@@ -222,10 +223,11 @@ class bleepUpdate(cs.Cmnd):
             icmName,
             "icmIn"
         )
-        icm.unusedSuppress(icmPlayerInfoBaseDir)
+        # icm.unusedSuppress(icmPlayerInfoBaseDir)
 
         icmInputsExpose().cmnd(
-            interactive=False,
+            rtInv=rtInv,
+            cmndOutcome=cmndOutcome,
             argsList=[
                 os.path.join(
                     panelBasePath,
@@ -235,9 +237,10 @@ class bleepUpdate(cs.Cmnd):
         )
 
         outcome = beginPanelStdout().cmnd(
-            interactive=False,
+            rtInv=rtInv,
+            cmndOutcome=cmndOutcome,
         )
-        if outcome.isProblematic(): return(io.eh.badOutcome(outcome))
+        if outcome.isProblematic(): return(b_io.eh.badOutcome(outcome))
 
         beginPanelStr = outcome.results
 
@@ -382,7 +385,7 @@ class icmInputsExpose(cs.Cmnd):
             return b_io.eh.badOutcome(cmndOutcome)
         cmndArgsSpecDict = self.cmndArgsSpec()
 ####+END:
-        icmsBase = effectiveArgsList[0]
+        icmsBase = argsList[0]
 
         G_myFullName = sys.argv[0]
         G_myName = os.path.basename(G_myFullName)
@@ -391,7 +394,7 @@ class icmInputsExpose(cs.Cmnd):
         
         print("{icmInBase}".format(icmInBase=icmInBase))
             
-        icm.csParamsToFileParamsUpdate(
+        b.fp.csParamsToFileParamsUpdate(
             parRoot="{icmInBase}/paramsFp".format(icmInBase=icmInBase),
             csParams=G.icmParamDictGet(),
         )
