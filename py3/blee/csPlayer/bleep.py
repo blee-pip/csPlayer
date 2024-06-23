@@ -132,6 +132,8 @@ def examples_icmBasic():
 
     cs.examples.menuChapter('*Blee ICM Player (Update, Start, StartUpdated)*')
 
+    # b_io.ann.write("icmPlayer.sh -h -v -n showRun -i grouped {G_myName}".format(G_myName=G_myName))
+
     cmndName = "bleepUpdate"
     cps = cpsInit(); cmndArgs = ""; menuItem()
 
