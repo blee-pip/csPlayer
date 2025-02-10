@@ -394,7 +394,7 @@ class icmInputsExpose(cs.Cmnd):
         
         print("{icmInBase}".format(icmInBase=icmInBase))
             
-        b.fp.csParamsToFileParamsUpdate(
+        cs.param.csParamsToFileParamsUpdate(
             parRoot="{icmInBase}/paramsFp".format(icmInBase=icmInBase),
             csParams=G.icmParamDictGet(),
         )
